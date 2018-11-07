@@ -1,1 +1,3 @@
 /build
+/src/main/java/com/nlp/pxing/decode/*.java
+/src/main/jniLibs/armeabi/*.so

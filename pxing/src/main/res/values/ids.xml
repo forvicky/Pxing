@@ -14,6 +14,7 @@
  limitations under the License.
  -->
 <resources>
+    <item name="begin" type="id" />
     <item name="decode" type="id" />
     <item name="quit" type="id" />
     <item name="decode_failed" type="id" />

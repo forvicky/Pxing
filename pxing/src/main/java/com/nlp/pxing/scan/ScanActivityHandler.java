@@ -76,7 +76,7 @@ public class ScanActivityHandler extends Handler {
     private void restartPreviewAndDecode() {
         if (state == State.SUCCESS) {
             state = State.PREVIEW;
-            mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+            mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.begin);
             mScanActivity.drawViewfinder();
         }
     }
