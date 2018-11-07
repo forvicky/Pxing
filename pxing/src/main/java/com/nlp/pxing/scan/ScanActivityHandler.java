@@ -56,9 +56,21 @@ public class ScanActivityHandler extends Handler {
     }
 
 
-    //todo 退出
     public void quitSynchronously() {
+        state = State.DONE;
+        mCameraManager.stopPreview();
+        Message quit = Message.obtain(decodeThread.getHandler(), R.id.quit);
+        quit.sendToTarget();
+        try {
+            // Wait at most half a second; should be enough time, and onPause() will timeout quickly
+            decodeThread.join(500L);
+        } catch (InterruptedException e) {
+            // continue
+        }
 
+        // Be absolutely sure we don't send any queued up messages
+        removeMessages(R.id.decode_succeeded);
+        removeMessages(R.id.decode_failed);
     }
 
     private void restartPreviewAndDecode() {

@@ -55,7 +55,7 @@ public class DecodeHandler extends Handler {
         YuvUtil.cropYUV(imgData,width,height,cropData,finderRect.width(),finderRect.height(),finderRect.top,finderRect.left);
 
         //测试查看裁剪后的效果
-        ImageUtil.saveImageData(cropData);
+        //ImageUtil.saveImageData(cropData);
 
         //坑爹，解码库bug，byte数组大小必须等于长*宽，所以舍弃了一些数据
         byte [] resultData=new byte[finderRect.width()*finderRect.height()];
