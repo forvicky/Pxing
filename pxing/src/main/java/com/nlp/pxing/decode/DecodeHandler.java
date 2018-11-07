@@ -45,7 +45,7 @@ public class DecodeHandler extends Handler {
 
         if (msg.what==R.id.begin){
             uImg=new uIMG(mCameraManager.getFramingRectInPreview().width(),mCameraManager.getFramingRectInPreview().height(),mScanActivity);
-
+ 
             int i;
             boolean md5isright = false;
             byte[] vlaue = uImg.Verify1();
