@@ -3,6 +3,8 @@ package com.nlp.pxing.scan;
 
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
+
 import com.nlp.pxing.R;
 import com.nlp.pxing.camera.CameraManager;
 import com.nlp.pxing.decode.DecodeThread;
@@ -13,7 +15,7 @@ import com.nlp.pxing.decode.DecodeThread;
 public class ScanActivityHandler extends Handler {
     private ScanActivity mScanActivity;
     private CameraManager mCameraManager;
-//    private final DecodeThread decodeThread;
+    private final DecodeThread decodeThread;
     private State state;
 
     private enum State {
@@ -26,6 +28,9 @@ public class ScanActivityHandler extends Handler {
         mScanActivity=scanActivity;
         mCameraManager=cameraManager;
 
+        decodeThread=new DecodeThread(scanActivity,mCameraManager);
+        decodeThread.start();
+        state = State.SUCCESS;
 
         cameraManager.startPreview();
         restartPreviewAndDecode();
@@ -35,6 +40,18 @@ public class ScanActivityHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
+
+
+        if(msg.what==R.id.decode_succeeded){
+            state = State.SUCCESS;
+            Toast.makeText(mScanActivity,"解码成功",Toast.LENGTH_SHORT).show();
+
+
+        }else if(msg.what==R.id.decode_failed){
+            state = State.PREVIEW;
+            Toast.makeText(mScanActivity,"解码失败",Toast.LENGTH_SHORT).show();
+            mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+        }
 
     }
 
@@ -47,7 +64,7 @@ public class ScanActivityHandler extends Handler {
     private void restartPreviewAndDecode() {
         if (state == State.SUCCESS) {
             state = State.PREVIEW;
-           // mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+            mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
             mScanActivity.drawViewfinder();
         }
     }

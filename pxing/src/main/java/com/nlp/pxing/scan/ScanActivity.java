@@ -3,6 +3,7 @@ package com.nlp.pxing.scan;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -33,6 +34,8 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
     private ScanActivityHandler mScanActivityHandler;
     private boolean hasSurface;
 
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,6 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
 
-
-
     }
 
     @Override
@@ -60,6 +61,8 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
 
+        handler=new ScanActivityHandler(this,cameraManager);
+
         beepManager.updatePrefs();
         ambientLightManager.start(cameraManager);
 
@@ -71,6 +74,10 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceHolder.addCallback(this);
         }
+    }
+
+    public Handler getHandler(){
+        return handler;
     }
 
     @Override
