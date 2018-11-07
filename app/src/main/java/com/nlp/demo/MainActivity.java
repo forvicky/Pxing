@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import com.nlp.pxing.camera.CameraActivity;
+import com.nlp.pxing.scan.ScanActivity;
 
 import java.io.File;
 
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,CameraActivity.class);
+                Intent intent=new Intent(MainActivity.this,ScanActivity.class);
                 intent.putExtra("mPhotoPath",FolderManager.getPhotoFolder()+ File.separator+"avator.jpg");
                 startActivity(intent);
             }

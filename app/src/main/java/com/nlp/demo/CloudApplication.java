@@ -12,7 +12,7 @@ public class CloudApplication extends Application {
         super.onCreate();
 
 
-        if(true){
+        if(false){
             CrashHandler crashHandler = CrashHandler.getInstance();
             crashHandler.init(getApplicationContext());
         }
