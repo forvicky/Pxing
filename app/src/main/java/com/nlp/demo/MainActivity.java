@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.nlp.pxing.camera.CameraActivity;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnScan;
 
@@ -18,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnScan=(Button)findViewById(R.id.btn_scan);
 
-        //测试
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,CameraActivity.class);
+                intent.putExtra("mPhotoPath",FolderManager.getPhotoFolder()+ File.separator+"avator.jpg");
                 startActivity(intent);
             }
         });
