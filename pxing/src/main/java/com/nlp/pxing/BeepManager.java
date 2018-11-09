@@ -60,7 +60,7 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
         }
     }
 
-    synchronized void playBeepSoundAndVibrate() {
+    public synchronized void playBeepSoundAndVibrate() {
         if (playBeep && mediaPlayer != null) {
             mediaPlayer.start();
         }

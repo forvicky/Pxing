@@ -24,7 +24,6 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
 
     private ViewfinderView viewfinderView;
 
-
     private CameraManager cameraManager;
     private BeepManager beepManager;
     private AmbientLightManager ambientLightManager;
@@ -74,6 +73,10 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
 
     public ScanActivityHandler getHandler(){
         return mScanActivityHandler;
+    }
+
+    public BeepManager getBeepManager(){
+        return beepManager;
     }
 
     @Override
@@ -126,8 +129,9 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                //todo 返回事件
-                break;
+                setResult(RESULT_CANCELED);
+                finish();
+                return true;
             case KeyEvent.KEYCODE_FOCUS:
             case KeyEvent.KEYCODE_CAMERA:
                 // Handle these events so they don't launch the Camera app

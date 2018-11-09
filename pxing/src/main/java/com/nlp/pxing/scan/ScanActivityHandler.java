@@ -12,6 +12,7 @@ import com.nlp.pxing.R;
 import com.nlp.pxing.camera.CameraManager;
 import com.nlp.pxing.decode.DecodeThread;
 import com.nlp.pxing.utils.LogUtil;
+import com.nlp.pxing.utils.ToastUtil;
 
 /**
  * Created by zdd on 2018/11/7
@@ -55,12 +56,14 @@ public class ScanActivityHandler extends Handler {
             if(scanResult.isNLP()){
                 state = State.SUCCESS;
 
+                //zddAdd 增加结果广播
                 Intent intent=new Intent();
                 intent.putExtra("ScanResult",scanResult);
+                //mScanActivity.getBeepManager().playBeepSoundAndVibrate();
                 mScanActivity.setResult(Activity.RESULT_OK,intent);
                 mScanActivity.finish();
             }else{
-                Toast.makeText(mScanActivity,"非NLP专属码",Toast.LENGTH_SHORT).show();
+                ToastUtil.showOnceToast(mScanActivity,"非NLP专属码");
                 state = State.PREVIEW;
                 mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
             }
