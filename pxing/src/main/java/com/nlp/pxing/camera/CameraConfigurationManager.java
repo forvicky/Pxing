@@ -186,7 +186,11 @@ final class CameraConfigurationManager {
 
         }
 
+
         parameters.setPreviewSize(bestPreviewSize.x, bestPreviewSize.y);
+
+        //zddsetting 预览像素配置
+        parameters.setPreviewSize(1280, 720);
 
         theCamera.setParameters(parameters);
 
@@ -194,11 +198,14 @@ final class CameraConfigurationManager {
 
         Camera.Parameters afterParameters = theCamera.getParameters();
         Camera.Size afterSize = afterParameters.getPreviewSize();
-        if (afterSize != null && (bestPreviewSize.x != afterSize.width || bestPreviewSize.y != afterSize.height)) {
+        if (afterSize != null ) {
             Log.w(TAG, "Camera said it supported preview size " + bestPreviewSize.x + 'x' + bestPreviewSize.y +
                     ", but after setting it, preview size is " + afterSize.width + 'x' + afterSize.height);
             bestPreviewSize.x = afterSize.width;
             bestPreviewSize.y = afterSize.height;
+
+            cameraResolution.x= afterSize.height;
+            cameraResolution.y = afterSize.width;
         }
     }
 

@@ -41,10 +41,12 @@ public final class CameraManager {
 
     private static final String TAG = CameraManager.class.getSimpleName();
 
-    private static final int MIN_FRAME_WIDTH = 240;
-    private static final int MIN_FRAME_HEIGHT = 240;
-    private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
-    private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
+    //1080*1920 采用320 最后裁剪框尺寸是480*480,720*1280 采用480 最后裁剪框尺寸是480*480
+    //zddsetting 选取框大小配置,自动识别解码库有特殊要求，这个值不能乱配
+    private static final int MIN_FRAME_WIDTH = 480;
+    private static final int MIN_FRAME_HEIGHT = 480;
+    private static final int MAX_FRAME_WIDTH = 480;
+    private static final int MAX_FRAME_HEIGHT = 480;
 
     private final Context context;
     private final CameraConfigurationManager configManager;
@@ -97,6 +99,7 @@ public final class CameraManager {
 
         Camera cameraObject = theCamera.getCamera();
         Camera.Parameters parameters = cameraObject.getParameters();
+
         String parametersFlattened = parameters == null ? null : parameters.flatten(); // Save these, temporarily
         try {
             configManager.setDesiredCameraParameters(theCamera, false);

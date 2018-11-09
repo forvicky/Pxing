@@ -1,6 +1,9 @@
 package com.nlp.pxing.scan;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -8,6 +11,7 @@ import android.widget.Toast;
 import com.nlp.pxing.R;
 import com.nlp.pxing.camera.CameraManager;
 import com.nlp.pxing.decode.DecodeThread;
+import com.nlp.pxing.utils.LogUtil;
 
 /**
  * Created by zdd on 2018/11/7
@@ -43,13 +47,27 @@ public class ScanActivityHandler extends Handler {
 
 
         if(msg.what==R.id.decode_succeeded){
-            state = State.SUCCESS;
-            Toast.makeText(mScanActivity,"解码成功",Toast.LENGTH_SHORT).show();
 
+            ScanResult scanResult=(ScanResult) msg.obj;
+            LogUtil.d("解码成功");
+            LogUtil.d("明文区="+scanResult.getLawsText());
+            LogUtil.d("隐藏区="+scanResult.getHiddenText());
+            if(scanResult.isNLP()){
+                state = State.SUCCESS;
+
+                Intent intent=new Intent();
+                intent.putExtra("ScanResult",scanResult);
+                mScanActivity.setResult(Activity.RESULT_OK,intent);
+                mScanActivity.finish();
+            }else{
+                Toast.makeText(mScanActivity,"非NLP专属码",Toast.LENGTH_SHORT).show();
+                state = State.PREVIEW;
+                mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+            }
 
         }else if(msg.what==R.id.decode_failed){
+            LogUtil.d("解码失败");
             state = State.PREVIEW;
-            Toast.makeText(mScanActivity,"解码失败",Toast.LENGTH_SHORT).show();
             mCameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
         }
 

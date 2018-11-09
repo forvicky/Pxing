@@ -1,0 +1,8 @@
+
+        parameters.setPreviewSize(1280, 720);
+11-08 11:22:16.256 6884-6944/com.nlp.demo D/zddHttp: ===decode=== width=720  height=1280  finderRect.width()=480  finderRect.height()=480
+
+
+
+
+11-08 11:24:54.268 7083-7140/com.nlp.demo D/zddHttp: ===decode=== width=1920  height=1080  finderRect.width()=1280  finderRect.height()=405
